@@ -67,12 +67,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
-  final _sidebarXController =
-      SidebarXController(selectedIndex: 0); // Controlador para SidebarX
-      final List<Widget> _screens = [
-    Center(child: GeneratorPage()),
-    Center(child: FavoritesPage()),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -101,50 +95,70 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     return Scaffold(
-      body: Row(
-        children: [
-          SidebarX(
-            controller: _sidebarXController,
-            extendedTheme: SidebarXTheme(
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                )),
-            items: [
-              SidebarXItem(
-                iconBuilder: (context, selected) => Icon(
-                  Icons.home,
-                  color: selected ? Colors.brown : Colors.grey.shade600,
+      appBar: AppBar(title: Text("App Moure Dev")),
+      drawer: Drawer(
+        backgroundColor: colorScheme.primary,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity, // Ocupa todo el ancho del Drawer
+              decoration: BoxDecoration(color: colorScheme.secondary),
+              padding: EdgeInsets.all(20),
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: colorScheme.secondary),
+                margin: EdgeInsets.all(20),
+                child: Text(
+                  'Menú',
+                  style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
-                label: 'Home',
-                onTap: () {
-                  setState(() {
-                    _sidebarXController.selectedIndex;
-                  });
-                },
               ),
-              SidebarXItem(
-                iconBuilder: (context, selected) => Icon(
-                  Icons.favorite,
-                  color: selected ? Colors.brown : Colors.grey.shade600,
-                ),
-                label: 'Favorites',
-                onTap: () {
-                  setState(() {
-                    _sidebarXController.selectIndex(1);
-                  });
-                },
-              ),
-            ],
-          ),
-          Expanded(
-            child: AnimatedBuilder(
-              animation: _sidebarXController,
-              builder: (context, child) {
-                return _screens[_sidebarXController.selectedIndex];
+            ),
+            ListTile(
+              leading: Icon(Icons.home, color: Colors.white),
+              title: Text('Home', style: TextStyle(color: Colors.white)),
+              selected: selectedIndex == 0,
+              onTap: () {
+                setState(() {
+                  selectedIndex = 0;
+                });
+                Navigator.pop(context);
               },
             ),
-          ),
+            ListTile(
+              leading: Icon(Icons.favorite, color: Colors.white),
+              title: Text('Favorites', style: TextStyle(color: Colors.white)),
+              selected: selectedIndex == 1,
+              onTap: () {
+                setState(() {
+                  selectedIndex = 1;
+                });
+                Navigator.pop(context);
+              },
+            ),
+            Expanded(child: Container()),
+            Divider(
+              color: Colors.white54,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextButton.icon(
+                onPressed: () {
+                  print("Logout presionado");
+                },
+                icon: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ),
+                label: Text("Logout", style: TextStyle(color: Colors.white)),
+                style: TextButton.styleFrom(alignment: Alignment.centerLeft),
+              ),
+            )
+          ],
+        ),
+      ),
+      body: Row(
+        children: [
+          Expanded(child: mainArea),
         ],
       ),
     );
