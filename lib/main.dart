@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The container for the current page, with its background color
     // and subtle switching animation.
     var mainArea = ColoredBox(
-      color: colorScheme.surfaceVariant,
+      color: colorScheme.surfaceContainerHighest,
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 200),
         child: page,
@@ -103,13 +103,22 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: double.infinity, // Ocupa todo el ancho del Drawer
               decoration: BoxDecoration(color: colorScheme.secondary),
-              padding: EdgeInsets.all(20),
+
               child: DrawerHeader(
-                decoration: BoxDecoration(color: colorScheme.secondary),
-                margin: EdgeInsets.all(20),
-                child: Text(
-                  'Menú',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
+                decoration: BoxDecoration(color: Colors.transparent),
+                margin: EdgeInsets.zero,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Menú',
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                    /* Divider(
+                      color: Colors.white54,
+                      thickness: 1,
+                    ) */
+                  ],
                 ),
               ),
             ),
